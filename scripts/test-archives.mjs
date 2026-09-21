@@ -6,6 +6,7 @@ import {
   cp,
   readdir,
   symlink,
+  realpath,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -13,7 +14,9 @@ import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { pack, run, root } from "./pack.mjs";
 const packed = await pack();
-const directory = await mkdtemp(join(tmpdir(), "lomi-archives-"));
+const directory = await realpath(
+  await mkdtemp(join(tmpdir(), "lomi-archives-")),
+);
 const archives = {};
 await mkdir(join(directory, "archives"));
 for (const [name, path] of Object.entries(packed)) {

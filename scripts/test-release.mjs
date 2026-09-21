@@ -1,5 +1,12 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, writeFile, cp } from "node:fs/promises";
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  writeFile,
+  cp,
+  realpath,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
@@ -9,7 +16,9 @@ const metadata = JSON.parse(
   await readFile(join(root, "packages/create-plugin/package.json"), "utf8"),
 );
 const generatorURL = `https://github.com/lomi-dev/plugin-tools/releases/download/v${metadata.version}/create-lomi-plugin-${metadata.version}.tgz`;
-const directory = await mkdtemp(join(tmpdir(), "lomi-public-release-"));
+const directory = await realpath(
+  await mkdtemp(join(tmpdir(), "lomi-public-release-")),
+);
 process.env.npm_config_store_dir = join(directory, "store");
 process.env.npm_config_cache = join(directory, "cache");
 const runner = join(directory, "runner");
