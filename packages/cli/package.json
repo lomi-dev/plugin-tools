@@ -1,0 +1,49 @@
+{
+  "name": "@lomi-dev/plugin-cli",
+  "version": "0.1.0-alpha.0",
+  "description": "Check, build, diagnose and package Lomi plugins",
+  "type": "module",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lomi-dev/plugin-tools.git",
+    "directory": "packages/cli"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "bin": {
+    "lomi-plugin": "src/bin.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/config.d.mts",
+      "default": "./src/config.mjs"
+    },
+    "./testing": {
+      "types": "./src/testing.d.mts",
+      "default": "./src/testing.mjs"
+    }
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "@simplebench/plugin-sdk": "1.1.0-alpha.0"
+  },
+  "peerDependenciesMeta": {
+    "@simplebench/plugin-sdk": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "fflate": "0.8.2",
+    "jsonc-parser": "3.3.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  }
+}

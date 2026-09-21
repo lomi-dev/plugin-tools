@@ -1,0 +1,4 @@
+node_modules/
+artifacts/
+.lomi-*/
+.DS_Store

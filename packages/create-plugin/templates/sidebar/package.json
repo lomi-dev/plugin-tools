@@ -1,0 +1,25 @@
+{
+  "name": "__NPM_NAME__",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "check": "lomi-plugin check",
+    "test": "lomi-plugin build && node --test tests/*.test.mjs",
+    "build": "lomi-plugin build",
+    "package": "lomi-plugin package",
+    "doctor": "lomi-plugin doctor"
+  },
+  "devDependencies": {
+    "@simplebench/plugin-sdk": "1.1.0-alpha.0",
+    "@lomi-dev/plugin-cli": "0.1.0-alpha.0",
+    "typescript": "7.0.2",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  }
+}

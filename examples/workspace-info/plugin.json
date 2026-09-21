@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "hostApi": 1,
+  "id": "example.workspace-info",
+  "name": "Workspace info",
+  "version": "0.1.0",
+  "description": "A Lomi plugin.",
+  "entry": "dist/index.js",
+  "activation": "lazy",
+  "contributes": {
+    "commands": [
+      {
+        "id": "example.workspace-info.open",
+        "label": "Workspace info",
+        "description": "Open the plugin.",
+        "context": {
+          "workspace": true
+        }
+      }
+    ],
+    "views": [
+      {
+        "id": "example.workspace-info.view",
+        "title": "Workspace info",
+        "placement": "central",
+        "multiple": false,
+        "stateVersion": 1
+      }
+    ]
+  },
+  "stylesheets": ["view.css"]
+}

@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["/plugin.json"],
+      "url": "./node_modules/@simplebench/plugin-sdk/plugin.schema.json"
+    }
+  ]
+}
