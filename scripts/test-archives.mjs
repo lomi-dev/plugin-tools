@@ -152,7 +152,8 @@ const metadata = JSON.parse(
 );
 metadata.devDependencies["@simplebench/plugin-sdk"] = `file:${archives.sdk}`;
 await writeFile(join(panel, "package.json"), JSON.stringify(metadata));
-run("pnpm", ["install", "--ignore-scripts"], panel);
+run("pnpm", ["install", "--no-frozen-lockfile", "--ignore-scripts"], panel);
+run("pnpm", ["install", "--frozen-lockfile", "--ignore-scripts"], panel);
 await writeFile(
   sourcePath,
   original +
