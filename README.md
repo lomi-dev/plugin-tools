@@ -20,7 +20,7 @@ pnpm install --ignore-scripts
 pnpm check
 pnpm test
 pnpm build
-pnpm doctor
+pnpm run doctor
 pnpm package
 ```
 

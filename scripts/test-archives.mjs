@@ -91,7 +91,7 @@ for (const template of [
   assert.equal(checkJSON.schemaVersion, 1);
   assert.equal(checkJSON.result.bundleChecked, false);
   for (const command of ["check", "test", "build", "package", "doctor"]) {
-    const output = run("pnpm", [command], project);
+    const output = run("pnpm", ["run", command], project);
     await writeFile(join(directory, `${template}-${command}.log`), output);
   }
   const artifact = join(project, "artifacts", `example.${template}-0.1.0.zip`);

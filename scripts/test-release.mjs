@@ -86,7 +86,7 @@ for (const template of [
   for (const command of ["check", "test", "build", "doctor", "package"]) {
     await writeFile(
       join(directory, `${template}-${command}.log`),
-      run("pnpm", [command], project),
+      run("pnpm", ["run", command], project),
     );
   }
   results.push({
