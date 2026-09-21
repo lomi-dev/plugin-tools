@@ -1,10 +1,10 @@
 # Contributing
 
-The SDK source belongs to `lomi/packages/plugin-sdk`. This repository owns the
+The SDK source belongs to the separate `lomi-dev/plugin-sdk` repository. This repository owns the
 CLI, generator, templates and examples. Node 22.14+ and pnpm 11.25.0 are required.
 
 Run `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm format:check` and
-`pnpm test:archives`. The archive test packs the sibling `../lomi` SDK by default.
+`pnpm test:archives`. The archive test packs the sibling `../plugin-sdk` checkout by default.
 Set `LOMI_SDK_REPO` to another host checkout, or `LOMI_SDK_TARBALL` to an already
 prepared archive. Author projects are installed under the system temporary
 folder and kept with their logs for inspection. They do not use workspace links.

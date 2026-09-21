@@ -10,5 +10,6 @@ The destination must be new or empty. Generation installs no dependencies and
 creates no Git repository. Existing user files are preserved on error or
 interruption. After installing dependencies, commit the new lockfile before CI.
 
-This is an unpublished local candidate. Use its tested tarball until npm account,
-names and publication are configured. M1 has no dev command. Apache-2.0.
+This alpha is distributed as a GitHub prerelease archive. Generated projects
+pin tested SDK/CLI release URLs; run `pnpm install --ignore-scripts`. npm
+publication requires account and scope configuration. M1 has no dev command. Apache-2.0.

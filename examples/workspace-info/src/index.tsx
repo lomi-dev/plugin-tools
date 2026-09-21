@@ -2,7 +2,7 @@ import {
   useHostContext,
   type PluginContext,
   type ViewProps,
-} from "@simplebench/plugin-sdk";
+} from "@lomi-dev/plugin-sdk";
 export function WorkspaceInfo({ panel, setState }: ViewProps) {
   const host = useHostContext();
   const showPath =

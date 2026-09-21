@@ -31,10 +31,10 @@
     "LICENSE"
   ],
   "peerDependencies": {
-    "@simplebench/plugin-sdk": "1.1.0-alpha.0"
+    "@lomi-dev/plugin-sdk": "1.1.0-alpha.0"
   },
   "peerDependenciesMeta": {
-    "@simplebench/plugin-sdk": {
+    "@lomi-dev/plugin-sdk": {
       "optional": true
     }
   },

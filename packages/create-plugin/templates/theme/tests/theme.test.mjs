@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { validatePackage } from '@simplebench/plugin-sdk/package';
+import { validatePackage } from '@lomi-dev/plugin-sdk/package';
 test('theme is data-only and supports both appearances', async () => {
   const { manifest, files } = await validatePackage('package');
   assert.equal(manifest.entry, undefined);

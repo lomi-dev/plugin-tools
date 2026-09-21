@@ -3,7 +3,7 @@ import type {
   HostSnapshot,
   PluginContext,
   PanelDescriptor,
-} from "@simplebench/plugin-sdk";
+} from "@lomi-dev/plugin-sdk";
 export declare function createTestHost(
   manifest: PluginManifest,
   initial?: Partial<HostSnapshot>,

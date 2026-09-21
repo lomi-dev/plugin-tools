@@ -3,9 +3,15 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: publish-tools
+  cancel-in-progress: false
 jobs:
+  validate:
+    if: github.ref == 'refs/heads/main' && vars.NPM_PUBLISH_READY == 'true'
+    uses: ./.github/workflows/check.yml
   publish:
-    if: vars.NPM_PUBLISH_READY == 'true'
+    needs: validate
     environment: npm
     runs-on: ubuntu-latest
     permissions:
@@ -13,38 +19,14 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: plugin-tools
-      - uses: actions/checkout@v4
-        with:
-          repository: lomi-dev/lomi
-          ref: ${{ vars.LOMI_SDK_REF }}
-          path: lomi
-      - name: Require a pinned SDK revision
-        env:
-          SDK_REF: ${{ vars.LOMI_SDK_REF }}
-        run: test ${#SDK_REF} -eq 40
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
           registry-url: https://registry.npmjs.org
-      - uses: pnpm/action-setup@v4
+      - uses: actions/download-artifact@v4
         with:
-          version: "11.25.0"
-      - run: pnpm install --frozen-lockfile
-        working-directory: lomi
-      - run: pnpm install --frozen-lockfile
-        working-directory: plugin-tools
-      - run: pnpm format:check && pnpm check && pnpm test && pnpm test:archives
-        working-directory: plugin-tools
-      - name: Verify OIDC tooling
-        run: npm install --global npm@11.5.1
-      - name: Publish exactly the tested tool archives
-        working-directory: plugin-tools
-        run: |
-          npm publish ./artifacts/lomi-dev-plugin-cli-0.1.0-alpha.0.tgz --access public --tag next --provenance
-          npm publish ./artifacts/create-lomi-plugin-0.1.0-alpha.0.tgz --access public --tag next --provenance
-      - uses: actions/upload-artifact@v4
-        with:
-          name: published-candidates
-          path: plugin-tools/artifacts/
+          name: candidates-ubuntu-latest
+          path: artifacts
+      - run: npm install --global npm@11.5.1
+      - name: Publish the exact verified archives
+        run: node scripts/publish.mjs

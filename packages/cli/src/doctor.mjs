@@ -36,7 +36,7 @@ export async function doctor(cwd, app, cliVersion) {
       );
       if (name === "react" && api) {
         const fromSDK = createRequire(
-          api.require.resolve("@simplebench/plugin-sdk/build"),
+          api.require.resolve("@lomi-dev/plugin-sdk/build"),
         );
         if (
           (await realpath(fromSDK.resolve("react"))) !==

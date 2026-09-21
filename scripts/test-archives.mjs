@@ -70,7 +70,7 @@ for (const template of [
     [
       "add",
       "-D",
-      `@simplebench/plugin-sdk@file:${archives.sdk}`,
+      `@lomi-dev/plugin-sdk@file:${archives.sdk}`,
       `@lomi-dev/plugin-cli@file:${archives.cli}`,
       "--ignore-scripts",
     ],
@@ -79,7 +79,7 @@ for (const template of [
   if (template !== "theme") {
     await writeFile(
       join(project, "src/contract-types.ts"),
-      `import { defineConfig } from '@lomi-dev/plugin-cli'; import { createTestHost } from '@lomi-dev/plugin-cli/testing'; import type { PluginManifest } from '@simplebench/plugin-sdk'; defineConfig({ assets: ['LICENSE'] }); declare const manifest: PluginManifest; const host = await createTestHost(manifest); host.context.snapshot(); host.dispose();\n// @ts-expect-error Configuration keys are closed.\ndefineConfig({ unknown: true });\n`,
+      `import { defineConfig } from '@lomi-dev/plugin-cli'; import { createTestHost } from '@lomi-dev/plugin-cli/testing'; import type { PluginManifest } from '@lomi-dev/plugin-sdk'; defineConfig({ assets: ['LICENSE'] }); declare const manifest: PluginManifest; const host = await createTestHost(manifest); host.context.snapshot(); host.dispose();\n// @ts-expect-error Configuration keys are closed.\ndefineConfig({ unknown: true });\n`,
     );
   }
   const checkJSON = JSON.parse(
@@ -150,7 +150,7 @@ run("node", ["offline-probe.mjs"], panel);
 const metadata = JSON.parse(
   await readFile(join(panel, "package.json"), "utf8"),
 );
-metadata.devDependencies["@lomi-dev/plugin-sdk"] = `file:${archives.sdk}`;
+metadata.devDependencies["@simplebench/plugin-sdk"] = `file:${archives.sdk}`;
 await writeFile(join(panel, "package.json"), JSON.stringify(metadata));
 run("pnpm", ["install", "--ignore-scripts"], panel);
 await writeFile(
@@ -170,7 +170,7 @@ const map = JSON.parse(
 assert.equal(map.sourcesContent, undefined);
 await writeFile(
   join(panel, "interrupt-probe.mjs"),
-  `import assert from 'node:assert/strict'; import { readFile } from 'node:fs/promises'; import { buildPlugin } from '@simplebench/plugin-sdk/build'; const before = await readFile('package/dist/index.js'); const controller = new AbortController(); const pending = buildPlugin({ assets: ['view.css', 'LICENSE'], signal: controller.signal }); setTimeout(() => controller.abort(), 1); await assert.rejects(pending); assert.deepEqual(await readFile('package/dist/index.js'), before);`,
+  `import assert from 'node:assert/strict'; import { readFile } from 'node:fs/promises'; import { buildPlugin } from '@lomi-dev/plugin-sdk/build'; const before = await readFile('package/dist/index.js'); const controller = new AbortController(); const pending = buildPlugin({ assets: ['view.css', 'LICENSE'], signal: controller.signal }); setTimeout(() => controller.abort(), 1); await assert.rejects(pending); assert.deepEqual(await readFile('package/dist/index.js'), before);`,
 );
 run("node", ["interrupt-probe.mjs"], panel);
 const built = await readFile(join(panel, "package/dist/index.js"));

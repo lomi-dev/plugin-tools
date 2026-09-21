@@ -1,27 +1,22 @@
 # Lomi plugin tools
 
-Local M1 alpha candidate: generator, `check`, `build`, `package`, `doctor`, four
-templates and a Workspace info example. SDK source stays in the application
-repository. Tools use the existing host API 1 and shared React runtime.
+M1 alpha tools: generator, `check`, `build`, `package`, `doctor`, four
+templates and a Workspace info example. SDK source lives in the separate [plugin-sdk repository](https://github.com/lomi-dev/plugin-sdk). Tools use the existing host API 1 and shared React runtime.
 
 **Not published to npm.** The maintainer has created the npm account `lomidev`;
 package scopes and publishing access still need confirmation. Desktop
 qualification of the candidate is still pending. There is no `dev` command.
 
-## Try the prepared archives
+## Create a plugin
 
-Use Node 22.14+ and pnpm 11.25.0. Obtain the three tested candidate tarballs from
-the maintainer, or prepare them from the candidate SDK checkout as described
-under Development. Archives are not included in this repository. Set
-`LOMI_ARCHIVES` to their absolute directory; these POSIX commands create the
-author project in a fresh temporary directory outside both repositories:
+Use Node 22.14+ and pnpm 11.25.0. These POSIX commands download the published
+GitHub prerelease generator and create a project outside the source repositories:
 
 ```sh
-export LOMI_ARCHIVES="/absolute/path/to/candidate-archives"
 LOMI_AUTHOR_ROOT="$(mktemp -d)"
-pnpm --package "$LOMI_ARCHIVES/create-lomi-plugin-0.1.0-alpha.0.tgz" dlx create-lomi-plugin "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
+pnpm --package https://github.com/lomi-dev/plugin-tools/releases/download/v0.1.0-alpha.0/create-lomi-plugin-0.1.0-alpha.0.tgz dlx create-lomi-plugin "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
 cd "$LOMI_AUTHOR_ROOT/my-plugin"
-pnpm add -D "@simplebench/plugin-sdk@file:$LOMI_ARCHIVES/simplebench-plugin-sdk-1.1.0-alpha.0.tgz" "@lomi-dev/plugin-cli@file:$LOMI_ARCHIVES/lomi-dev-plugin-cli-0.1.0-alpha.0.tgz" --ignore-scripts
+pnpm install --ignore-scripts
 pnpm check
 pnpm test
 pnpm build
@@ -29,10 +24,14 @@ pnpm doctor
 pnpm package
 ```
 
-Distribute the three tarballs to another machine to try this without any Lomi
-source checkout, Rust or desktop build tools. Replace the archive paths there.
-After public publication, install the exact tested versions from npm instead of
-local files. Do not use the planned `pnpm create lomi-plugin` command yet.
+The generated package pins SDK and CLI GitHub prerelease URLs. Commit its first
+lockfile to retain archive integrity. The author needs no Lomi or SDK checkout,
+Rust or desktop build tools. npm publication remains pending; the planned
+`pnpm create lomi-plugin` registry command is not available yet.
+
+For development archives, generate using the local generator tarball and replace
+the two dependency pins with named `file:` tarball dependencies before installing.
+`pnpm test:archives` exercises that path using fresh external projects.
 
 Import `package/` in **Settings > Plugins > Import plugin**. Enable the code plugin
 and choose **Trust and enable**. Open a workspace and run **Workspace info** in
@@ -59,22 +58,25 @@ pnpm test
 pnpm format:check
 ```
 
-The archive integration suite requires the candidate SDK `1.1.0-alpha.0`, whose
-source changes are still pending in `lomi-dev/lomi`. Its current `main` SDK
-`1.0.0` is insufficient. With the candidate checkout available, run
-`pnpm test:archives`.
+The archive suite uses the standalone SDK checkout in `../plugin-sdk`:
 
-When using the sibling SDK source, first run `pnpm --dir ../lomi install --frozen-lockfile`.
-`test:archives` packs the sibling `../lomi` SDK and both tools, installs them into
-fresh temporary author directories with a fresh pnpm store, and exercises all
-four templates. `LOMI_SDK_REPO` selects another checkout; `LOMI_SDK_TARBALL` selects
-an existing archive. `pnpm pack:tools` prepares only the archives. The generated
-project does not depend on these source repositories after archive installation.
+```sh
+git clone https://github.com/lomi-dev/plugin-sdk.git ../plugin-sdk
+pnpm --dir ../plugin-sdk install --frozen-lockfile
+pnpm test:archives
+```
 
-GitHub Actions runs syntax, formatting and unit checks on Linux, macOS and
-Windows. Archive integration jobs remain explicitly skipped until the repository
-variable `LOMI_SDK_REF` points to the full commit containing the candidate SDK in
-`lomi-dev/lomi`. Passing tool checks alone does not qualify those archives.
+`LOMI_SDK_REPO` selects another standalone SDK checkout; `LOMI_SDK_TARBALL`
+selects an existing archive. `pnpm pack:tools` prepares SDK and tool archives.
+Generated projects are installed and tested in fresh external directories with
+an isolated dependency store. The application checkout is not required.
+
+GitHub Actions runs the complete archive suite on Linux, macOS and Windows.
+`sdk-source.json` pins a reviewed full SDK commit and its compatible version.
+Update that file when upgrading SDK; the CLI and all templates must agree.
+The generated projects currently pin GitHub prerelease tarballs while npm
+publishing access is pending. Their first lockfile records archive integrity.
+After npm publication, update those pins to the verified exact registry versions.
 
 The [release procedure](docs/releases.md) explains first publication, OIDC,
 registry verification and rollback. [Desktop qualification](docs/desktop-qualification.md)
@@ -105,7 +107,7 @@ constructed at runtime cannot be inferred by a build validator.
 
 ## Polski
 
-To lokalny kandydat M1, jeszcze bez publikacji npm. Wymagania: Node 22.14+
+To narzędzia M1 alpha udostępnione przez GitHub Releases, jeszcze bez publikacji npm. Wymagania: Node 22.14+
 i pnpm 11.25.0. Polecenia powyżej instalują rzeczywiste archiwa i tworzą projekt
 poza repozytorium. Po przeniesieniu archiwów na inną maszynę autor nie potrzebuje
 źródeł Lomi ani Rust. Publiczne nazwy pakietów wymagają potwierdzenia własności.

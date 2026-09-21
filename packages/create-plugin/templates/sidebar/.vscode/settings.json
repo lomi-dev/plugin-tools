@@ -4,7 +4,7 @@
       "fileMatch": [
         "/plugin.json"
       ],
-      "url": "./node_modules/@simplebench/plugin-sdk/plugin.schema.json"
+      "url": "./node_modules/@lomi-dev/plugin-sdk/plugin.schema.json"
     }
   ]
 }

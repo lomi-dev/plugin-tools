@@ -1,4 +1,4 @@
-import { useHostContext, type PluginContext, type ViewProps } from '@simplebench/plugin-sdk';
+import { useHostContext, type PluginContext, type ViewProps } from '@lomi-dev/plugin-sdk';
 export function WorkspaceInfo({ panel, setState }: ViewProps) {
   const host = useHostContext();
   const showPath = typeof panel.state === 'object' && panel.state !== null && !Array.isArray(panel.state) && panel.state.showPath === true;

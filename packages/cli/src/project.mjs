@@ -20,9 +20,7 @@ export class Diagnostic extends Error {
 export async function sdk(cwd) {
   const require = createRequire(join(cwd, "package.json"));
   const load = async (path) =>
-    import(
-      pathToFileURL(require.resolve(`@simplebench/plugin-sdk/${path}`)).href
-    );
+    import(pathToFileURL(require.resolve(`@lomi-dev/plugin-sdk/${path}`)).href);
   try {
     const compatibility = await load("compatibility");
     if (compatibility.compatibility.sdk !== "1.1.0-alpha.0")
@@ -39,7 +37,7 @@ export async function sdk(cwd) {
       "SDK_VERSION",
       error.message,
       "package.json",
-      "Install @simplebench/plugin-sdk@1.1.0-alpha.0 from the tested release or candidate archive.",
+      "Install @lomi-dev/plugin-sdk@1.1.0-alpha.0 from the tested release or candidate archive.",
     );
   }
 }

@@ -1,10 +1,10 @@
 # __ID__
 
 Template: `command`. Uses host API 1 and the Lomi 0.4.0 source baseline.
-SDK 1.1.0-alpha.0 and CLI 0.1.0-alpha.0 are local candidates until npm publication.
+SDK 1.1.0-alpha.0 and CLI 0.1.0-alpha.0 are pinned GitHub prerelease archives while npm publication is pending.
 
-Install the candidate archives as described in the tools README. After publication,
-run `pnpm install` and commit the generated `pnpm-lock.yaml` before enabling CI.
+Run `pnpm install --ignore-scripts` to download the pinned SDK and CLI archives.
+Commit the generated `pnpm-lock.yaml` before enabling CI.
 Run `pnpm check`, `pnpm test`, `pnpm build`, then `pnpm package`.
 Tests exercise the built plugin with an in-memory context, without a desktop host.
 
@@ -22,8 +22,8 @@ This template uses Apache-2.0; replace the license if your project requires it.
 
 ## Polski
 
-Zainstaluj lokalne archiwa kandydata zgodnie z README narzędzi. Po publikacji
-wystarczy `pnpm install`. Zapisz utworzony `pnpm-lock.yaml` przed włączeniem CI.
+Uruchom `pnpm install --ignore-scripts`, aby pobrać przypięte archiwa SDK i CLI.
+Zapisz utworzony `pnpm-lock.yaml` przed włączeniem CI. Publikacja npm jest otwarta.
 Uruchom `pnpm check`, `pnpm test`, `pnpm build`, a następnie `pnpm package`.
 Testy używają atrapy kontekstu i nie sprawdzają aplikacji desktopowej.
 Zaimportuj folder `package/` w Settings > Plugins. Plugin z kodem wymaga włączenia
