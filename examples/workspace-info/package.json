@@ -12,8 +12,8 @@
     "doctor": "lomi-plugin doctor"
   },
   "devDependencies": {
-    "@lomi-dev/plugin-sdk": "1.1.0-alpha.0",
-    "@lomi-dev/plugin-cli": "0.1.0-alpha.1",
+    "@lomi-dev/plugin-sdk": "1.1.0-alpha.1",
+    "@lomi-dev/plugin-cli": "0.1.0-alpha.2",
     "typescript": "7.0.2",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7"

@@ -1,7 +1,7 @@
 # example.workspace-info
 
 Template: `panel`. Uses host API 1 and the Lomi 0.4.0 source baseline.
-SDK 1.1.0-alpha.0 and CLI 0.1.0-alpha.1 are pinned npm dependencies.
+SDK 1.1.0-alpha.1 and CLI 0.1.0-alpha.2 are pinned npm dependencies.
 
 Run `pnpm install --ignore-scripts` to install the pinned SDK and CLI versions from npm.
 Commit the generated `pnpm-lock.yaml` before enabling CI.
@@ -12,7 +12,7 @@ Import `package/` in Settings > Plugins. For code plugins, enable and approve th
 content revision. Open a workspace, then use Commands to run the declared command.
 Themes appear in Settings > Themes after import without code approval.
 Change the source, build again, disable the old plugin and import the new folder.
-Approve the new revision; use Restart SimpleBench if the previous code was evaluated.
+Approve the new revision; use Restart Lomi if the previous code was evaluated.
 Restart follows normal unsaved-work guards. M1 has no `dev` command.
 
 The ZIP contains `plugin.json` at its root. Recipients extract it before importing.
@@ -29,5 +29,5 @@ Testy używają atrapy kontekstu i nie sprawdzają aplikacji desktopowej.
 Zaimportuj folder `package/` w Settings > Plugins. Plugin z kodem wymaga włączenia
 i zatwierdzenia rewizji. Otwórz workspace i uruchom komendę w Commands.
 Motyw wybierz w Settings > Themes. Po zmianach zbuduj paczkę, wyłącz stary plugin,
-ponów import i zatwierdzenie. W razie potrzeby użyj Restart SimpleBench.
+ponów import i zatwierdzenie. W razie potrzeby użyj Restart Lomi.
 Odbiorca rozpakowuje ZIP przed importem. M1 nie zawiera polecenia `dev`.

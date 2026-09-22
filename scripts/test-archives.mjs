@@ -159,19 +159,19 @@ run("node", ["offline-probe.mjs"], panel);
 const metadata = JSON.parse(
   await readFile(join(panel, "package.json"), "utf8"),
 );
-metadata.devDependencies["@simplebench/plugin-sdk"] = `file:${archives.sdk}`;
+metadata.devDependencies["@lomi-dev/plugin-sdk"] = `file:${archives.sdk}`;
 await writeFile(join(panel, "package.json"), JSON.stringify(metadata));
 run("pnpm", ["install", "--no-frozen-lockfile", "--ignore-scripts"], panel);
 run("pnpm", ["install", "--frozen-lockfile", "--ignore-scripts"], panel);
 await writeFile(
   sourcePath,
   original +
-    '\nexport { HostContext as oldContext } from "@simplebench/plugin-sdk";\nexport { HostContext as newContext } from "@lomi-dev/plugin-sdk";\nexport { useState as sharedUseState } from "react";\n',
+    '\nexport { HostContext as oldContext } from "@lomi-dev/plugin-sdk";\nexport { HostContext as newContext } from "@lomi-dev/plugin-sdk";\nexport { useState as sharedUseState } from "react";\n',
 );
 run("pnpm", ["build"], panel);
 await writeFile(
   join(panel, "identity-probe.mjs"),
-  `import assert from 'node:assert/strict'; import { readFile } from 'node:fs/promises'; import { createTestHost } from '@lomi-dev/plugin-cli/testing'; const host = await createTestHost(JSON.parse(await readFile('plugin.json', 'utf8'))); try { const plugin = await import('./package/dist/index.js'); const runtime = globalThis[Symbol.for('simplebench.plugin-api.v1')]; assert.equal(plugin.oldContext, runtime.sdk.HostContext); assert.equal(plugin.newContext, runtime.sdk.HostContext); assert.equal(plugin.sharedUseState, runtime.react.useState); } finally { host.dispose(); }`,
+  `import assert from 'node:assert/strict'; import { readFile } from 'node:fs/promises'; import { createTestHost } from '@lomi-dev/plugin-cli/testing'; const host = await createTestHost(JSON.parse(await readFile('plugin.json', 'utf8'))); try { const plugin = await import('./package/dist/index.js'); const runtime = globalThis[Symbol.for('lomi.plugin-api.v1')]; assert.equal(plugin.oldContext, runtime.sdk.HostContext); assert.equal(plugin.newContext, runtime.sdk.HostContext); assert.equal(plugin.sharedUseState, runtime.react.useState); } finally { host.dispose(); }`,
 );
 run("node", ["identity-probe.mjs"], panel);
 const map = JSON.parse(

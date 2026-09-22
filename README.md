@@ -4,7 +4,8 @@ M1 alpha CLI: `check`, `build`, `package`, `doctor`, testing helpers and the
 Workspace info example. The generator and four templates live in the separate
 [create-lomi-plugin repository](https://github.com/lomi-dev/create-lomi-plugin). SDK source lives in the separate [plugin-sdk repository](https://github.com/lomi-dev/plugin-sdk). Tools use the existing host API 1 and shared React runtime.
 
-SDK 1.1.0-alpha.0 and CLI 0.1.0-alpha.1 use exact npm versions. Desktop
+SDK 1.1.0-alpha.1 and CLI 0.1.0-alpha.2 are unpublished rebrand candidates.
+The npm commands below apply after their publication. Desktop
 qualification is still pending. There is no `dev` command.
 
 ## Create a plugin
@@ -14,7 +15,7 @@ npm generator and create a project outside the source repositories:
 
 ```sh
 LOMI_AUTHOR_ROOT="$(mktemp -d)"
-pnpm create lomi-plugin@0.1.0-alpha.2 "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
+pnpm create lomi-plugin@0.1.0-alpha.3 "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
 cd "$LOMI_AUTHOR_ROOT/my-plugin"
 pnpm install --ignore-scripts
 pnpm check
@@ -40,7 +41,7 @@ template logs the current workspace. The theme template is data-only and appears
 in Settings > Themes without code activation.
 
 After editing, build again, disable the previous plugin, reimport `package/` and
-approve the new revision. If code was already evaluated, use **Restart SimpleBench**
+approve the new revision. If code was already evaluated, use **Restart Lomi**
 and resolve normal unsaved-work prompts. Build errors keep the last good folder.
 
 `package` writes a ZIP, SHA-256 and validation JSON to `artifacts/`. The ZIP has
@@ -119,7 +120,7 @@ poza repozytorium. Autor nie potrzebuje źródeł Lomi ani Rust.
 Uruchom `check`, `test`, `build`, `doctor` i `package`. W Settings > Plugins
 zaimportuj folder `package/`, włącz plugin i zatwierdź rewizję. Otwórz workspace
 i komendę Workspace info. Zmień kod, zbuduj, wyłącz poprzednią wersję, ponów import
-i zatwierdzenie. W razie potrzeby użyj Restart SimpleBench. Nie ma jeszcze `dev`.
+i zatwierdzenie. W razie potrzeby użyj Restart Lomi. Nie ma jeszcze `dev`.
 
 ZIP trzeba rozpakować przed importem. Archiwum, suma SHA-256 i raport walidacji
 znajdują się w `artifacts/`. Kolejne wydanie wymaga nowej wersji lub jawnego

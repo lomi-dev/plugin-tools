@@ -1,6 +1,6 @@
 # Desktop qualification
 
-The available machine is macOS ARM64. `/Applications/SimpleBench.app` reports
+The available machine is macOS ARM64. `/Applications/Lomi.app` reports
 0.4.0. This identifies the installation; it does not certify this candidate.
 No Windows, Linux or Intel macOS desktop runner was available in this session.
 

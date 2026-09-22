@@ -1,5 +1,9 @@
 # CLI releases
 
+Rebrand candidate 0.1.0-alpha.2 is prepared locally and has not been published by
+this task. It requires SDK 1.1.0-alpha.1 and the Lomi runtime bridge. Publish
+SDK, CLI and generator in that order, then verify registry installations.
+
 This repository publishes only `@lomi-dev/plugin-cli`. Generator and templates
 belong to [create-lomi-plugin](https://github.com/lomi-dev/create-lomi-plugin),
 and the contract belongs to [plugin-sdk](https://github.com/lomi-dev/plugin-sdk).
@@ -46,3 +50,8 @@ through v0.1.0-alpha.1 remain available.
 
 Rollback by restoring the previous dependency and lockfile or generator pin;
 retain older archives and publish a new version for corrected package bytes.
+
+For local candidate qualification, set `LOMI_GENERATOR_TARBALL` to the packed
+generator. Its integrity must still match `generator-source.json`.
+`sdk-source.json` pins the reviewed rebrand commit. Publishing that source
+to GitHub does not publish the candidate packages to npm.

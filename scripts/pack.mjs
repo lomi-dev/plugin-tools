@@ -68,13 +68,20 @@ export async function pack() {
     output,
     `${generatorSource.name}-${generatorSource.version}.tgz`,
   );
-  const response = await fetch(
-    `https://registry.npmjs.org/create-lomi-plugin/-/create-lomi-plugin-${generatorSource.version}.tgz`,
-    { signal: AbortSignal.timeout(30000) },
-  );
-  if (!response.ok)
-    throw new Error(`Generator download failed: HTTP ${response.status}`);
-  const generatorBytes = Buffer.from(await response.arrayBuffer());
+  let generatorBytes;
+  if (process.env.LOMI_GENERATOR_TARBALL) {
+    generatorBytes = await readFile(
+      resolve(process.env.LOMI_GENERATOR_TARBALL),
+    );
+  } else {
+    const response = await fetch(
+      `https://registry.npmjs.org/create-lomi-plugin/-/create-lomi-plugin-${generatorSource.version}.tgz`,
+      { signal: AbortSignal.timeout(30000) },
+    );
+    if (!response.ok)
+      throw new Error(`Generator download failed: HTTP ${response.status}`);
+    generatorBytes = Buffer.from(await response.arrayBuffer());
+  }
   assert.equal(
     `sha512-${createHash("sha512").update(generatorBytes).digest("base64")}`,
     generatorSource.integrity,

@@ -1,6 +1,6 @@
 {
   "name": "@lomi-dev/plugin-cli",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Check, build, diagnose and package Lomi plugins",
   "type": "module",
   "license": "Apache-2.0",
@@ -31,7 +31,7 @@
     "LICENSE"
   ],
   "peerDependencies": {
-    "@lomi-dev/plugin-sdk": "1.1.0-alpha.0"
+    "@lomi-dev/plugin-sdk": "1.1.0-alpha.1"
   },
   "peerDependenciesMeta": {
     "@lomi-dev/plugin-sdk": {

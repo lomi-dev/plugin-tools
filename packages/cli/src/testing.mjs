@@ -117,7 +117,7 @@ export async function createTestHost(manifest, initial = {}) {
       return `https://plugin.invalid/${manifest.id}/${path}`;
     },
   };
-  const symbol = Symbol.for("simplebench.plugin-api.v1");
+  const symbol = Symbol.for("lomi.plugin-api.v1");
   const previous = globalThis[symbol];
   let React, HostContext;
   if (manifest.entry) {

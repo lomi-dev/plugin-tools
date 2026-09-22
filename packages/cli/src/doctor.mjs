@@ -59,10 +59,7 @@ export async function doctor(cwd, app, cliVersion) {
     }
   }
   if (!app && process.platform === "darwin") {
-    for (const candidate of [
-      "/Applications/Lomi.app",
-      "/Applications/SimpleBench.app",
-    ]) {
+    for (const candidate of ["/Applications/Lomi.app"]) {
       try {
         await access(candidate);
         app = candidate;
