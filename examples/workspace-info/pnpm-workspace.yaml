@@ -1,0 +1,7 @@
+packages:
+  - "."
+allowBuilds:
+  esbuild: false
+minimumReleaseAgeExclude:
+  - "@lomi-dev/plugin-sdk@1.1.0-alpha.0"
+  - "@lomi-dev/plugin-cli@0.1.0-alpha.1"
