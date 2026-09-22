@@ -14,7 +14,7 @@ npm generator and create a project outside the source repositories:
 
 ```sh
 LOMI_AUTHOR_ROOT="$(mktemp -d)"
-pnpm create lomi-plugin@0.1.0-alpha.1 "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
+pnpm create lomi-plugin@0.1.0-alpha.2 "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
 cd "$LOMI_AUTHOR_ROOT/my-plugin"
 pnpm install --ignore-scripts
 pnpm check
