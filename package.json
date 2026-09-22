@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "node scripts/sdk-ref.mjs && node scripts/check.mjs",
-    "test:release": "node scripts/test-release.mjs"
+    "test:release": "node scripts/test-release.mjs",
+    "test:registry": "node scripts/test-release.mjs --registry"
   },
   "devDependencies": {
     "prettier": "3.9.6"

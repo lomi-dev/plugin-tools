@@ -1,4 +1,4 @@
-# Create Lomi plugin candidate
+# Create Lomi plugin
 
 `create-lomi-plugin <directory> --id author.name --name "Name" --template panel`
 
@@ -10,6 +10,7 @@ The destination must be new or empty. Generation installs no dependencies and
 creates no Git repository. Existing user files are preserved on error or
 interruption. After installing dependencies, commit the new lockfile before CI.
 
-This alpha is distributed as a GitHub prerelease archive. Generated projects
-pin tested SDK/CLI release URLs; run `pnpm install --ignore-scripts`. npm
-publication requires account and scope configuration. M1 has no dev command. Apache-2.0.
+Generate with `pnpm create lomi-plugin@0.1.0-alpha.1 my-plugin`. Projects pin
+SDK and CLI versions from npm; run `pnpm install --ignore-scripts`, then
+`pnpm check`, `pnpm test`, `pnpm build` and `pnpm run doctor`.
+This is an alpha using manual desktop import. M1 has no dev command. Apache-2.0.

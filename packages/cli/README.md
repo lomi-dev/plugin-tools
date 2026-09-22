@@ -1,4 +1,4 @@
-# Lomi plugin CLI candidate
+# Lomi plugin CLI
 
 Commands: `lomi-plugin check`, `build`, `package`, `doctor`. `--json` returns
 schemaVersion 1. `doctor --app <path>` inspects installation metadata without
@@ -17,5 +17,6 @@ persistence across application restarts, or the desktop renderer. Workspace
 identity in this helper uses project path and workspace name because the public
 snapshot has no workspace ID; use desktop tests for same-named workspaces.
 
-This is an unpublished local candidate. Follow the repository README to install
-its tarball. Apache-2.0.
+Install this alpha with `pnpm add -D @lomi-dev/plugin-cli@0.1.0-alpha.1
+@lomi-dev/plugin-sdk@1.1.0-alpha.0` (one command). Run the project diagnostic
+script with `pnpm run doctor` to avoid pnpm's own diagnostic command. Apache-2.0.

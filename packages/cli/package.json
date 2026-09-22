@@ -1,6 +1,6 @@
 {
   "name": "@lomi-dev/plugin-cli",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "Check, build, diagnose and package Lomi plugins",
   "type": "module",
   "license": "Apache-2.0",

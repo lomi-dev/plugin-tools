@@ -187,7 +187,7 @@ if (
         console.log(JSON.stringify({ schemaVersion: 1, ok: true, directory }));
       else
         console.log(
-          `Created ${directory}\nOpen this directory, then run:\npnpm install\npnpm check\npnpm test\npnpm build\nImport package/ in Settings > Plugins.\npnpm package\nM1 has no dev command. Candidate packages require the local archive instructions until publication.`,
+          `Created ${directory}\nOpen this directory, then run:\npnpm install\npnpm check\npnpm test\npnpm build\nImport package/ in Settings > Plugins.\npnpm package\nM1 has no dev command. Keep pnpm-lock.yaml to preserve the tested dependency versions.`,
         );
     }
   } catch (error) {

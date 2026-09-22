@@ -12,8 +12,8 @@
     "doctor": "lomi-plugin doctor"
   },
   "devDependencies": {
-    "@lomi-dev/plugin-sdk": "https://github.com/lomi-dev/plugin-sdk/releases/download/v1.1.0-alpha.0/lomi-dev-plugin-sdk-1.1.0-alpha.0.tgz",
-    "@lomi-dev/plugin-cli": "https://github.com/lomi-dev/plugin-tools/releases/download/v0.1.0-alpha.0/lomi-dev-plugin-cli-0.1.0-alpha.0.tgz",
+    "@lomi-dev/plugin-sdk": "1.1.0-alpha.0",
+    "@lomi-dev/plugin-cli": "0.1.0-alpha.1",
     "typescript": "7.0.2"
   }
 }
