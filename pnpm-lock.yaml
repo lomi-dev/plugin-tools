@@ -21,8 +21,6 @@ importers:
         specifier: 3.3.1
         version: 3.3.1
 
-  packages/create-plugin: {}
-
 packages:
 
   fflate@0.8.2:

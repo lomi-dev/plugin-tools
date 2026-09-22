@@ -1,4 +1,4 @@
-name: Publish next candidates
+name: Publish CLI prerelease
 on:
   workflow_dispatch:
 permissions:
@@ -28,7 +28,7 @@ jobs:
           name: candidates-ubuntu-latest
           path: artifacts
       - run: npm install --global npm@11.5.1
-      - name: Publish the exact verified archives
+      - name: Publish the exact verified CLI archive
         run: node scripts/publish.mjs
   verify-registry:
     needs: publish

@@ -12,18 +12,14 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { run, root } from "./pack.mjs";
 
-const metadata = JSON.parse(
-  await readFile(join(root, "packages/create-plugin/package.json"), "utf8"),
-);
-const registry = process.argv.includes("--registry");
+import { generatorSource as metadata } from "./generator-source.mjs";
 const cliMetadata = JSON.parse(
   await readFile(join(root, "packages/cli/package.json"), "utf8"),
 );
 const sdkSource = JSON.parse(
   await readFile(join(root, "sdk-source.json"), "utf8"),
 );
-const generatorURL = `https://github.com/lomi-dev/plugin-tools/releases/download/v${metadata.version}/create-lomi-plugin-${metadata.version}.tgz`;
-const generatorSpec = registry ? metadata.version : generatorURL;
+const generatorSpec = metadata.version;
 const directory = await realpath(
   await mkdtemp(join(tmpdir(), "lomi-public-release-")),
 );
@@ -31,19 +27,18 @@ process.env.npm_config_store_dir = join(directory, "store");
 process.env.npm_config_cache = join(directory, "cache");
 process.env.npm_config_registry = "https://registry.npmjs.org";
 const registryPackages = [];
-if (registry) {
-  for (const [name, version] of [
-    [metadata.name, metadata.version],
-    [cliMetadata.name, cliMetadata.version],
-    ["@lomi-dev/plugin-sdk", sdkSource.version],
-  ]) {
-    const dist = JSON.parse(
-      run("pnpm", ["view", `${name}@${version}`, "dist", "--json"], root),
-    );
-    assert.match(dist.integrity, /^sha512-/);
-    assert.ok(dist.tarball.startsWith("https://registry.npmjs.org/"));
-    registryPackages.push({ name, version, ...dist });
-  }
+for (const [name, version] of [
+  [metadata.name, metadata.version],
+  [cliMetadata.name, cliMetadata.version],
+  ["@lomi-dev/plugin-sdk", sdkSource.version],
+]) {
+  const dist = JSON.parse(
+    run("pnpm", ["view", `${name}@${version}`, "dist", "--json"], root),
+  );
+  assert.match(dist.integrity, /^sha512-/);
+  assert.ok(dist.tarball.startsWith("https://registry.npmjs.org/"));
+  if (name === metadata.name) assert.equal(dist.integrity, metadata.integrity);
+  registryPackages.push({ name, version, ...dist });
 }
 const runner = join(directory, "runner");
 await mkdir(runner);
@@ -97,25 +92,35 @@ for (const template of [
       ],
       runner,
     );
-  const pkg = JSON.parse(await readFile(join(project, "package.json"), "utf8"));
+  let pkg = JSON.parse(await readFile(join(project, "package.json"), "utf8"));
   for (const [name, spec] of Object.entries({
     ...pkg.dependencies,
     ...pkg.devDependencies,
   })) {
     assert.doesNotMatch(spec, /^(file:|link:|workspace:)/, name);
   }
-  if (registry) {
-    assert.equal(
-      pkg.devDependencies["@lomi-dev/plugin-sdk"],
-      sdkSource.version,
-    );
+  assert.equal(pkg.devDependencies["@lomi-dev/plugin-sdk"], sdkSource.version);
+  if (template === "workspace-info") {
     assert.equal(
       pkg.devDependencies["@lomi-dev/plugin-cli"],
       cliMetadata.version,
     );
   }
-  console.log(`Testing public ${template} without dependency overrides`);
-  run("pnpm", ["install", "--ignore-scripts"], project);
+  const scaffoldDependencies = { ...pkg.devDependencies };
+  console.log(`Testing published CLI with ${template}`);
+  run(
+    "pnpm",
+    [
+      "add",
+      "-D",
+      "--save-exact",
+      `@lomi-dev/plugin-cli@${cliMetadata.version}`,
+      `@lomi-dev/plugin-sdk@${sdkSource.version}`,
+      "--ignore-scripts",
+    ],
+    project,
+  );
+  pkg = JSON.parse(await readFile(join(project, "package.json"), "utf8"));
   run("pnpm", ["install", "--frozen-lockfile", "--ignore-scripts"], project);
   for (const command of ["check", "test", "build", "doctor", "package"]) {
     await writeFile(
@@ -125,6 +130,7 @@ for (const template of [
   }
   results.push({
     template,
+    scaffoldDependencies,
     sdk: pkg.devDependencies["@lomi-dev/plugin-sdk"],
     cli: pkg.devDependencies["@lomi-dev/plugin-cli"],
     lockSHA256: createHash("sha256")
@@ -145,7 +151,7 @@ await mkdir(join(root, "artifacts"), { recursive: true });
 const report = {
   schemaVersion: 1,
   date: new Date().toISOString(),
-  distribution: registry ? "npm" : "github-release",
+  distribution: "npm",
   generatorSpec,
   registryPackages,
   platform: `${process.platform}-${process.arch}`,
@@ -154,12 +160,7 @@ const report = {
   desktopTested: false,
 };
 await writeFile(
-  join(
-    root,
-    registry
-      ? "artifacts/registry-validation.json"
-      : "artifacts/release-validation.json",
-  ),
+  join(root, "artifacts/registry-validation.json"),
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(JSON.stringify(report, null, 2));

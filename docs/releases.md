@@ -1,46 +1,38 @@
-# Release procedure
+# CLI releases
 
-The source repositories are `lomi-dev/plugin-sdk` and `lomi-dev/plugin-tools`.
-The SDK package is `@lomi-dev/plugin-sdk`; CLI and generator are
-`@lomi-dev/plugin-cli` and `create-lomi-plugin`. The SDK's bundler preserves the
-legacy import and runtime symbol.
+This repository publishes only `@lomi-dev/plugin-cli`. Generator and templates
+belong to [create-lomi-plugin](https://github.com/lomi-dev/create-lomi-plugin),
+and the contract belongs to [plugin-sdk](https://github.com/lomi-dev/plugin-sdk).
+CLI, generator and SDK versions can advance independently.
 
-The npm organization is `lomi-dev`; its verified owner account is
-`maciejkolerski` with 2FA enabled. SDK 1.1.0-alpha.0 was first published using the
-original tested GitHub archive. Tools 0.1.0-alpha.1 switch generated projects to
-exact npm dependencies. Never overwrite a published version or its release assets.
+1. Review SDK compatibility and pin its full source commit/version in
+   sdk-source.json. Review the generator release and pin its exact npm version
+   and SHA-512 integrity in generator-source.json. Generator code is not copied
+   here; the archive test verifies the downloaded bytes before executing it.
+2. Update the CLI package version when its published bytes change. Run check,
+   test, format:check and test:archives. Require Linux, macOS and Windows CI.
+   The suite covers four generated templates, Workspace info, runtime identity,
+   packaging, error preservation and SDK import regressions.
+3. Download the successful Linux candidate archive and candidate-artifacts.json.
+   Verify source commit, SHA-256 and SHA-512. Publish only the CLI tarball with
+   interactive npm 2FA, or use the configured trusted publishing workflow.
+   SDK and generator entries in the report are integration dependencies, not
+   artifacts to republish. Existing versions and release assets are immutable.
+4. Configure npm trusted publishing for `@lomi-dev/plugin-cli` using GitHub owner
+   `lomi-dev`, repository `plugin-tools`, workflow `publish.yml`, environment
+   `npm`, with direct publishing permission. Enable NPM_PUBLISH_READY only after
+   account configuration. The workflow uses Node 24/npm 11.5.1, OIDC/provenance
+   and the exact verified Linux archive; it does not rebuild before publishing.
+5. Run test:registry and the public release workflow on all three systems after
+   publication. The generator pin stays fixed while the CLI candidate advances; this smoke
+   test explicitly upgrades scaffold dependencies to the published CLI/SDK pair.
+   A template update requiring the new CLI belongs in a later generator release.
+6. Record native results separately using desktop-qualification.md. Prerelease
+   publication does not establish stable desktop compatibility.
 
-1. Review an SDK release and update `sdk-source.json` with its full source commit
-   and version. Align CLI peer requirements, templates, examples and diagnostics.
-   SDK source is in its own repository; tools CI does not clone the application.
-2. Run `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm test`,
-   `pnpm format:check`, and `pnpm test:archives`. Require the full Linux, macOS
-   and Windows archive matrix. Review the tarballs, `candidate-artifacts.json`
-   and `archive-validation.json`. Download the exact tested Linux artifacts for
-   publication; do not substitute a rebuild from a different source commit.
-3. For manual publication, log in as the authorized owner and complete npm
-   2FA. Publish the qualified SDK from `lomi-dev/plugin-sdk` first. Align exact
-   template SDK/CLI versions, update example lockfiles, retest and publish the
-   verified CLI archive followed by the generator archive.
-   Review availability of the unscoped generator name before first publication.
-4. Configure npm trusted publishers: SDK uses `lomi-dev/plugin-sdk` /
-   `publish.yml`; both tools use `lomi-dev/plugin-tools` / `publish.yml`.
-   The environment is `npm`. Enable direct publishing permission and then set
-   `NPM_PUBLISH_READY=true`. The tools workflow tests all three operating systems
-   and publishes the exact verified Linux CLI and generator archives with OIDC,
-   then runs registry installation checks on all three systems.
-5. Run `pnpm test:registry` against npm in fresh directories and an empty store.
-   Generate all four templates and run install/check/test/build/package/doctor
-   without file overrides. Record registry integrity and source commits. Archive
-   or GitHub URL tests do not count as registry verification.
-6. Run the installed host checklist in `desktop-qualification.md`. Only after
-   registry and native qualification mark public M1 complete. Prereleases use
-   `next`; stable promotion is a separate decision with a supported-version matrix.
+The npm owner is `maciejkolerski`, with 2FA. Trusted publishing is prepared but
+not enabled. The generator requires its own publisher configuration in its new
+repository. Historical combined releases through v0.1.0-alpha.1 remain available.
 
-The OIDC workflow uses Node 24 and npm 11.5.1. Account configuration follows
-[npm trusted publishing](https://docs.npmjs.com/trusted-publishers/).
-
-Rollback: restore the consumer's previous dependency and lockfile, retain older
-artifacts, and publish a new corrected version. Do not overwrite releases or
-silently migrate incompatible plugin state. Recipients can disable the bad
-plugin and reimport a previously qualified package.
+Rollback by restoring the previous dependency and lockfile or generator pin;
+retain older archives and publish a new version for corrected package bytes.

@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+import { generatorSource } from "./generator-source.mjs";
 import { mkdir, readFile, copyFile, writeFile } from "node:fs/promises";
 import { resolve, join, basename } from "node:path";
 import { createHash } from "node:crypto";
@@ -51,10 +53,7 @@ export async function pack() {
     );
   }
   const result = { sdk };
-  for (const [key, folder] of [
-    ["cli", "cli"],
-    ["generator", "create-plugin"],
-  ]) {
+  for (const [key, folder] of [["cli", "cli"]]) {
     const directory = join(root, "packages", folder);
     run("pnpm", ["pack", "--pack-destination", output], directory);
     const metadata = JSON.parse(
@@ -65,6 +64,24 @@ export async function pack() {
       `${metadata.name.replace("@", "").replace("/", "-")}-${metadata.version}.tgz`,
     );
   }
+  const generator = join(
+    output,
+    `${generatorSource.name}-${generatorSource.version}.tgz`,
+  );
+  const response = await fetch(
+    `https://registry.npmjs.org/create-lomi-plugin/-/create-lomi-plugin-${generatorSource.version}.tgz`,
+    { signal: AbortSignal.timeout(30000) },
+  );
+  if (!response.ok)
+    throw new Error(`Generator download failed: HTTP ${response.status}`);
+  const generatorBytes = Buffer.from(await response.arrayBuffer());
+  assert.equal(
+    `sha512-${createHash("sha512").update(generatorBytes).digest("base64")}`,
+    generatorSource.integrity,
+    "Pinned generator integrity mismatch",
+  );
+  await writeFile(generator, generatorBytes);
+  result.generator = generator;
   const archives = [];
   for (const [kind, path] of Object.entries(result)) {
     const bytes = await readFile(path);
@@ -85,6 +102,7 @@ export async function pack() {
         sdkSource: process.env.LOMI_SDK_TARBALL
           ? "provided-archive"
           : JSON.parse(await readFile(join(root, "sdk-source.json"), "utf8")),
+        generatorSource,
         archives,
       },
       null,

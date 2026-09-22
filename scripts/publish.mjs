@@ -9,10 +9,7 @@ const report = JSON.parse(
 );
 assert.equal(report.sourceCommit, process.env.GITHUB_SHA);
 const paths = [];
-for (const [kind, folder] of [
-  ["cli", "cli"],
-  ["generator", "create-plugin"],
-]) {
+for (const [kind, folder] of [["cli", "cli"]]) {
   const metadata = JSON.parse(
     await readFile(join(root, "packages", folder, "package.json"), "utf8"),
   );

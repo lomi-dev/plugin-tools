@@ -48,6 +48,12 @@ for (const template of [
   if (template === "workspace-info")
     await cp(join(root, "examples/workspace-info"), project, {
       recursive: true,
+      filter: (path) =>
+        !path
+          .split(/[\\/]/)
+          .some((part) =>
+            ["node_modules", "package", "artifacts"].includes(part),
+          ),
     });
   else {
     run(

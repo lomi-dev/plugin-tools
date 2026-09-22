@@ -1,9 +1,10 @@
 # Lomi plugin tools
 
-M1 alpha tools: generator, `check`, `build`, `package`, `doctor`, four
-templates and a Workspace info example. SDK source lives in the separate [plugin-sdk repository](https://github.com/lomi-dev/plugin-sdk). Tools use the existing host API 1 and shared React runtime.
+M1 alpha CLI: `check`, `build`, `package`, `doctor`, testing helpers and the
+Workspace info example. The generator and four templates live in the separate
+[create-lomi-plugin repository](https://github.com/lomi-dev/create-lomi-plugin). SDK source lives in the separate [plugin-sdk repository](https://github.com/lomi-dev/plugin-sdk). Tools use the existing host API 1 and shared React runtime.
 
-SDK 1.1.0-alpha.0 and tools 0.1.0-alpha.1 use exact npm versions. Desktop
+SDK 1.1.0-alpha.0 and CLI 0.1.0-alpha.1 use exact npm versions. Desktop
 qualification is still pending. There is no `dev` command.
 
 ## Create a plugin
@@ -65,13 +66,17 @@ pnpm test:archives
 ```
 
 `LOMI_SDK_REPO` selects another standalone SDK checkout; `LOMI_SDK_TARBALL`
-selects an existing archive. `pnpm pack:tools` prepares SDK and tool archives.
+selects an existing archive. `pnpm pack:tools` prepares SDK/CLI archives and
+downloads the npm generator pinned in `generator-source.json`, verifying SHA-512
+before installing it. A generator source checkout is not required.
 Generated projects are installed and tested in fresh external directories with
 an isolated dependency store. The application checkout is not required.
 
 GitHub Actions runs the complete archive suite on Linux, macOS and Windows.
 `sdk-source.json` pins a reviewed full SDK commit and its compatible version.
-Update that file when upgrading SDK; the CLI and all templates must agree.
+Update that file when upgrading SDK. `generator-source.json` independently pins
+a reviewed npm generator version and integrity. Test the candidate CLI against
+that generator before advancing either baseline. Only CLI is published here.
 Generated projects pin registry versions and retain archive integrity in their
 lockfiles. Their pnpm configuration allows the two exact, tested Lomi releases
 through release-age checks; other dependencies keep the package manager policy.

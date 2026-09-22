@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "name": __NAME_JSON__,
-  "appearance": "adaptive",
-  "light": { "tokens": { "--color-primary": "#787878" } },
-  "dark": { "tokens": { "--color-primary": "#9a9a9a" } }
-}
