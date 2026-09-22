@@ -18,7 +18,7 @@ releases to advance independently of template releases. The generator repository
 separately verifies its unmodified template dependency pins.
 `pnpm test:release` is an alias for this registry check. `pnpm pack:tools` creates
 the candidate CLI/SDK archives and downloads the pinned generator for integration
-tests; the publishing workflow publishes only the CLI archive.
+tests; publish only the CLI archive using docs/releases.md.
 
 Keep source and release histories independent. To update the generator baseline,
 review its release and record its exact npm version and integrity. Do not bundle

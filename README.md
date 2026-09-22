@@ -72,7 +72,8 @@ before installing it. A generator source checkout is not required.
 Generated projects are installed and tested in fresh external directories with
 an isolated dependency store. The application checkout is not required.
 
-GitHub Actions runs the complete archive suite on Linux, macOS and Windows.
+GitHub Actions is disabled. Run the complete archive suite manually on Linux,
+macOS and Windows before releasing.
 `sdk-source.json` pins a reviewed full SDK commit and its compatible version.
 Update that file when upgrading SDK. `generator-source.json` independently pins
 a reviewed npm generator version and integrity. Test the candidate CLI against
@@ -82,7 +83,7 @@ lockfiles. Their pnpm configuration allows the two exact, tested Lomi releases
 through release-age checks; other dependencies keep the package manager policy.
 `pnpm test:registry` verifies all templates and the example against public npm.
 
-The [release procedure](docs/releases.md) explains first publication, OIDC,
+The [release procedure](docs/releases.md) explains manual publication,
 registry verification and rollback. [Desktop qualification](docs/desktop-qualification.md)
 separates pending native tests from the automated in-memory and browser tests.
 
