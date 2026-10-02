@@ -2,3 +2,6 @@ node_modules/
 package/
 artifacts/
 .lomi-*/
+
+# Local build output ownership is tied to this checkout.
+*.lomi-owned.json

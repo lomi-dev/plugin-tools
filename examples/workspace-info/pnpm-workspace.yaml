@@ -5,3 +5,7 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - "@lomi-dev/plugin-sdk@1.1.0-alpha.1"
   - "@lomi-dev/plugin-cli@0.1.0-alpha.2"
+
+overrides:
+  esbuild: 0.28.2
+  fflate: 0.8.3
