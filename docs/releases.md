@@ -1,7 +1,7 @@
 # CLI releases
 
-Rebrand candidate 0.1.0-alpha.2 is prepared locally and has not been published by
-this task. It requires SDK 1.1.0-alpha.1 and the Lomi runtime bridge. Publish
+Security distribution candidate 0.1.0-alpha.3 is prepared locally and has not been published by
+this task. It requires SDK 1.1.0-alpha.2 and the Lomi runtime bridge. Publish
 SDK, CLI and generator in that order, then verify registry installations.
 
 This repository publishes only `@lomi-dev/plugin-cli`. Generator and templates
@@ -55,3 +55,10 @@ For local candidate qualification, set `LOMI_GENERATOR_TARBALL` to the packed
 generator. Its integrity must still match `generator-source.json`.
 `sdk-source.json` pins the reviewed rebrand commit. Publishing that source
 to GitHub does not publish the candidate packages to npm.
+
+The SEC-002 local security candidate uses SDK 1.1.0-alpha.2. The source ref
+is the base commit; uncommitted release changes are identified by the SDK
+archive digest, not by that ref alone. The generator pin identifies the locally packed
+0.1.0-alpha.4 candidate by version and integrity; select it with
+LOMI_GENERATOR_TARBALL until publication. Generator tests also use archive
+overrides. None of these local checks qualify the unpublished registry path.

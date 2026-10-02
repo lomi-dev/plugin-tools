@@ -1,7 +1,7 @@
 # example.workspace-info
 
 Template: `panel`. Uses host API 1 and the Lomi 0.4.0 source baseline.
-SDK 1.1.0-alpha.1 and CLI 0.1.0-alpha.2 are pinned npm dependencies.
+SDK 1.1.0-alpha.2 and CLI 0.1.0-alpha.3 are pinned npm candidates; publish them before registry installation.
 
 Run `pnpm install --ignore-scripts` to install the pinned SDK and CLI versions from npm.
 Commit the generated `pnpm-lock.yaml` before enabling CI.

@@ -4,7 +4,7 @@ M1 alpha CLI: `check`, `build`, `package`, `doctor`, testing helpers and the
 Workspace info example. The generator and four templates live in the separate
 [create-lomi-plugin repository](https://github.com/lomi-dev/create-lomi-plugin). SDK source lives in the separate [plugin-sdk repository](https://github.com/lomi-dev/plugin-sdk). Tools use the existing host API 1 and shared React runtime.
 
-SDK 1.1.0-alpha.1 and CLI 0.1.0-alpha.2 are unpublished rebrand candidates.
+SDK 1.1.0-alpha.2 and CLI 0.1.0-alpha.3 are unpublished security distribution candidates.
 The npm commands below apply after their publication. Desktop
 qualification is still pending. There is no `dev` command.
 
@@ -15,7 +15,7 @@ npm generator and create a project outside the source repositories:
 
 ```sh
 LOMI_AUTHOR_ROOT="$(mktemp -d)"
-pnpm create lomi-plugin@0.1.0-alpha.3 "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
+pnpm create lomi-plugin@0.1.0-alpha.4 "$LOMI_AUTHOR_ROOT/my-plugin" --id example.workspace-info --name "Workspace info" --template panel
 cd "$LOMI_AUTHOR_ROOT/my-plugin"
 pnpm install --ignore-scripts
 pnpm check

@@ -23,8 +23,8 @@ export async function sdk(cwd) {
     import(pathToFileURL(require.resolve(`@lomi-dev/plugin-sdk/${path}`)).href);
   try {
     const compatibility = await load("compatibility");
-    if (compatibility.compatibility.sdk !== "1.1.0-alpha.1")
-      throw new Error("Expected SDK 1.1.0-alpha.1.");
+    if (compatibility.compatibility.sdk !== "1.1.0-alpha.2")
+      throw new Error("Expected SDK 1.1.0-alpha.2.");
     return {
       ...(await load("manifest")),
       ...(await load("package")),
@@ -37,7 +37,7 @@ export async function sdk(cwd) {
       "SDK_VERSION",
       error.message,
       "package.json",
-      "Install @lomi-dev/plugin-sdk@1.1.0-alpha.1 from the tested release or candidate archive.",
+      "Install @lomi-dev/plugin-sdk@1.1.0-alpha.2 from the tested release or candidate archive.",
     );
   }
 }
