@@ -56,9 +56,10 @@ generator. Its integrity must still match `generator-source.json`.
 `sdk-source.json` pins the reviewed rebrand commit. Publishing that source
 to GitHub does not publish the candidate packages to npm.
 
-The SEC-002 local security candidate uses SDK 1.1.0-alpha.2. The source ref
-is the base commit; uncommitted release changes are identified by the SDK
-archive digest, not by that ref alone. The generator pin identifies the locally packed
-0.1.0-alpha.4 candidate by version and integrity; select it with
+The SEC-002 security candidate uses SDK 1.1.0-alpha.2 from the clean reviewed
+commit recorded in sdk-source.json. A fresh pack at that commit reproduces the
+historical local candidate archive byte for byte; preserve its historical reports
+separately from the new clean-source qualification. The generator pin identifies
+the locally packed 0.1.0-alpha.4 candidate by version and integrity; select it with
 LOMI_GENERATOR_TARBALL until publication. Generator tests also use archive
 overrides. None of these local checks qualify the unpublished registry path.

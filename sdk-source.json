@@ -1,7 +1,7 @@
 {
   "repository": "lomi-dev/plugin-sdk",
-  "ref": "5f1f2fe779bfdfd70a6abde6e4442c15787d044c",
+  "ref": "bf7bb28fd9e9940b799f2e89791dfea869891f9d",
   "version": "1.1.0-alpha.2",
-  "sourceDirty": true,
+  "sourceDirty": false,
   "candidateArchiveSHA256": "2b58fc2b68f0a6ee342f2e2573a6f3004fc7b5b35f5a250a79955d8403811714"
 }
